@@ -1,8 +1,6 @@
 #include <iostream>
-#include <thread>
 #include <Windows.h>
 #pragma comment(lib,"winmm.lib")
-using namespace std;
 
 enum Scale
 {
@@ -28,19 +26,19 @@ int main()
 }
 
 
-void Score()        //ÀÖÆ×
+void Score()        //ï¿½ï¿½ï¿½ï¿½
 {
     HMIDIOUT handle;
     midiOutOpen(&handle, 0, 0, 0, CALLBACK_NULL);
-    int voice = 0x0;            // ÉùÒô²ÎÊý
-    int voiceType = 0x90;       // ÒôÉ«£¬·¶Î§Îª0x90~0x9f,ÆäÖÐ0x99Îª¹Ä£¬ÆäÓàÎª¸ÖÇÙ
-    int sleep = 148;            // Ò»¸öÊ®Áù·ÖÒô·ûµÄ³¤¶È  
-    int wind[2256][8] =        // ¸èÇú±àÅÅ£¬Ç°Á½Î»ÎªÖ÷ÐýÂÉ£¬ÖÐ¼äÈýÎ»ÎªºÍÏÒ£¬ºóÈýÎ»Îª¹Ä
+    int voice = 0x0;            // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    int voiceType = 0x90;       // ï¿½ï¿½É«ï¿½ï¿½ï¿½ï¿½Î§Îª0x90~0x9f,ï¿½ï¿½ï¿½ï¿½0x99Îªï¿½Ä£ï¿½ï¿½ï¿½ï¿½ï¿½Îªï¿½ï¿½ï¿½ï¿½
+    int sleep = 148;            // Ò»ï¿½ï¿½Ê®ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä³ï¿½ï¿½ï¿½  
+    int wind[2256][8] =        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Å£ï¿½Ç°ï¿½ï¿½Î»Îªï¿½ï¿½ï¿½ï¿½ï¿½É£ï¿½ï¿½Ð¼ï¿½ï¿½ï¿½Î»Îªï¿½ï¿½ï¿½Ò£ï¿½ï¿½ï¿½ï¿½ï¿½Î»Îªï¿½ï¿½
     {
-        //ÕâÑùµÄÒ»ÐÐ ÎªÁ½ÅÄ
+        //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ Îªï¿½ï¿½ï¿½ï¿½
         /*1*/   { B4,_,D3s,_,_,_,_,_ }, { C5s,_,_,_,_,_,_,_ }, { F5s,_,_,_,_,_,_,_ }, { B4,_,_,_,_,_,_,_ }, { C5s,_,_,_,_,_,_,_ }, { F5s,_,_,_,_,_,_,_ },
                 { B4,_,D4s,_,_,_,_,_ }, { C5s,_,_,_,_,_,_,_ }, { F5s,_,_,_,_,_,_,_ }, { B4,_,_,_,_,_,_,_ }, { C5s,_,_,_,_,_,_,_ }, { F5s,_,_,_,_,_,_,_ },
-                //Ã¿ËÄÅÄÒ»Ð¡½Ú
+                //Ã¿ï¿½ï¿½ï¿½ï¿½Ò»Ð¡ï¿½ï¿½
         /*2*/   { B4,_,E3,_,_,_,_,_ }, { C5s,_,_,_,_,_,_,_ }, { F5s,_,_,_,_,_,_,_ }, { B4,_,_,_,_,_,_,_ }, { C5s,_,_,_,_,_,_,_ }, { F5s,_,_,_,_,_,_,_ },
                 { B4,_,E4,_,_,_,_,_ }, { C5s,_,_,_,_,_,_,_ }, { F5s,_,_,_,_,_,_,_ }, { B4,_,_,_,_,_,_,_ }, { C5s,_,_,_,_,_,_,_ }, { F5s,_,_,_,_,_,_,_ },
 
@@ -219,7 +217,7 @@ void Score()        //ÀÖÆ×
         /*56*/  { B4,_,B2,F3s,B3,_,_,_ }, { C5s,_,_,_,_,_,_,_ }, { F5s,_,_,_,_,_,_,_ }, { B4,_,_,_,_,_,_,_ }, { C5s,_,_,_,_,_,_,_ }, { F5s,_,_,_,_,_,_,_ },
                 { B4,_,B2,F3s,B3,_,_,_ }, { C5s,_,_,_,_,_,_,_ }, { F5s,_,_,_,_,_,_,_ }, { B4,_,_,_,_,_,_,_ }, { C5s,_,_,_,_,_,_,_ }, { F5s,_,_,_,_,_,_,_ },
 
-        // ½ø¹Ä
+        // ï¿½ï¿½ï¿½ï¿½
         /*57*/  { B4,_,D3s,B3,D4s,_,D2,_ }, { C5s,_,C4s,_,_,_,D2,_ }, { F5s,_,B3,_,_,_,D2,_ }, { B4,B5,_,_,_,_,D2,_ }, { C5s,_,_,_,_,_,D2,_ }, { F5s,_,_,_,_,_,D2,_ },
                 { C6s,_,D3s,_,_,_,D2,_ }, { C5s,_,_,_,_,_,_,_ }, { F5s,B5,_,_,_,_,_,_ }, { B4,_,_,_,_,_,_,_ }, { C5s,F5s,_,_,_,_,_,_ }, { F5s,_,_,_,_,_,D2,_ },
 
@@ -297,7 +295,7 @@ void Score()        //ÀÖÆ×
         /*80*/  { B4,_,B2,F3s,B3,_,_,_ }, { C5s,_,_,_,_,_,_,_ }, { F5s,_,_,_,_,_,_,_ }, { B4,_,B3,_,_,_,_,_ }, { C5s,_,C4s,_,_,_,_,_ }, { F5s,_,B3,_,_,_,_,_ },
                 { B5,_,B3,_,_,_,_,_ }, { C6s,_,C4s,_,_,_,_,_ }, { B5,_,B3,_,_,_,_,_ }, { F5s,F6s,F4s,_,_,_,_,_ }, { _,_,_,_,_,_,_,_ }, { _,_,_,_,_,_,_,_ },
         
-        //Brioso ±äÇ°ÈýÐýÂÉÖÐÈýºÍÏÒ
+        //Brioso ï¿½ï¿½Ç°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         /*81*/  { B4,D5s,F5s,F2s,D3s,F3s,A3,_ }, { F5s,_,_,_,_,_,_,_ }, { F5s,_,_,_,_,_,_,_ }, { B4,D5s,F5s,F3s,D4s,_,C2,_ }, { _,_,_,F3s,D4s,_,_,_ }, { F5s,_,_,F3s,D4s,_,_,_ },
                 { B4,D5s,F5s,G2s,E3,G3s,C2,_ }, { _,_,_,_,_,_,_,_ }, { E5,_,_,F3s,_,_,_,_ }, { D4s,_,_,B3,D4s,F4s,D2,_ }, { _,_,_,D4s,_,_,_,_ }, { C5s,_,_,B3,_,_,_,_ },
 
@@ -650,32 +648,32 @@ void Score()        //ÀÖÆ×
                 { B4,_,_,_,_,_,_,_ }, { C5s,_,_,_,_,_,_,_ }, { F5s,_,_,_,_,_,_,_ }, { B4,_,_,_,_,_,_,_ }, { C5s,_,_,_,_,_,_,_ }, { F5s,_,_,_,_,_,_,_ },
         };
     /*
-        ¹Ä£ºC2Ç¿×³µÄµ×¹Ä  D2 ÉÔ³¤µÄ¾ü¹Ä E2 ¶ÌÔÝµÄ¾ü¹Ä D2sºÃºÝµÄ¾ü¹Ä   A2 Ò»Í¨  G2 ¶þÍ¨ F2 ÈýÍ¨
-            B1Õý³£µ×¹Ä    F3 Å£Áå       C3s Clash2    A3 Clash1       B3ºÍD3s ¶¡¶¡ïï G1sÇÃ¹Ä°ô
-            A1½ÚÅÄÆ÷ÇáÒô  A1s½ÚÅÄÆ÷ÖØÒô F2s ±Õ²Èïï    G2s ±Õ²ÈïïÇáÒô  A2s¿ª²Èïï
+        ï¿½Ä£ï¿½C2Ç¿×³ï¿½Äµ×¹ï¿½  D2 ï¿½Ô³ï¿½ï¿½Ä¾ï¿½ï¿½ï¿½ E2 ï¿½ï¿½ï¿½ÝµÄ¾ï¿½ï¿½ï¿½ D2sï¿½ÃºÝµÄ¾ï¿½ï¿½ï¿½   A2 Ò»Í¨  G2 ï¿½ï¿½Í¨ F2 ï¿½ï¿½Í¨
+            B1ï¿½ï¿½ï¿½ï¿½ï¿½×¹ï¿½    F3 Å£ï¿½ï¿½       C3s Clash2    A3 Clash1       B3ï¿½ï¿½D3s ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ G1sï¿½Ã¹Ä°ï¿½
+            A1ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½  A1sï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ F2s ï¿½Õ²ï¿½ï¿½ï¿½    G2s ï¿½Õ²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½  A2sï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     */
-    int rhyVolume;          // ÐýÂÉÒôÁ¿£¬·¶Î§Îª0x0~0x7f
-    int choVolume;          // ºÍÏÒÒôÁ¿
-    //int drumVolume;       // ¹ÄÒôÁ¿
-    int startSection = 0;   // ÆðÊ¼Ð¡½ÚÎ»ÖÃ
-    int endSection = 188;   // ½áÊøÐ¡½ÚÎ»ÖÃ
-    int beatPerSection = 4; // ÅÄÊý
-    int notePerBeat = 3;    // Ã¿ÅÄÒô·ûÊý
-    int currentSection = 0; // µ±Ç°Ð¡½Ú
+    int rhyVolume;          // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Î§Îª0x0~0x7f
+    int choVolume;          // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    //int drumVolume;       // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    int startSection = 0;   // ï¿½ï¿½Ê¼Ð¡ï¿½ï¿½Î»ï¿½ï¿½
+    int endSection = 188;   // ï¿½ï¿½ï¿½ï¿½Ð¡ï¿½ï¿½Î»ï¿½ï¿½
+    int beatPerSection = 4; // ï¿½ï¿½ï¿½ï¿½
+    int notePerBeat = 3;    // Ã¿ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    int currentSection = 0; // ï¿½ï¿½Ç°Ð¡ï¿½ï¿½
     for (int note = notePerBeat*beatPerSection*startSection; note < notePerBeat*beatPerSection*endSection; note++)
     {
         static int currentSection = note / (notePerBeat*beatPerSection);
-        //Ð¡½ÚÊý
+        //Ð¡ï¿½ï¿½ï¿½ï¿½
         if (note % 12 == 0)
         {
             printf("\n");
             currentSection++;
-            printf("%dÐ¡½Ú\t", currentSection);
+            printf("%dÐ¡ï¿½ï¿½\t", currentSection);
         }
         else
             printf("\t");
-        //ÒôÁ¿¿ØÖÆ
-        switch (currentSection)      //ÔÚÌØ¶¨µÄÐ¡½Ú´¦¿ØÖÆÒôÁ¿
+        //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+        switch (currentSection)      //ï¿½ï¿½ï¿½Ø¶ï¿½ï¿½ï¿½Ð¡ï¿½Ú´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         {
         case 111:
         case 112:rhyVolume = 0x34; choVolume = 0x55; break;
@@ -692,12 +690,12 @@ void Score()        //ÀÖÆ×
             //drumVolume = 0x52;
             break;
         }
-        // ÐýÂÉ
+        // ï¿½ï¿½ï¿½ï¿½
         voice = (rhyVolume << 16) + ((wind[note][0]) << 8) + voiceType;
         midiOutShortMsg(handle, voice);
         voice = (rhyVolume << 16) + ((wind[note][1]) << 8) + voiceType+1;
         midiOutShortMsg(handle, voice);
-        // ºÍÏÒ
+        // ï¿½ï¿½ï¿½ï¿½
         voice = (choVolume << 16) + ((wind[note][2]) << 8) + voiceType+2;
         midiOutShortMsg(handle, voice);
         voice = (choVolume << 16) + ((wind[note][3]) << 8) + voiceType+3;
@@ -706,7 +704,7 @@ void Score()        //ÀÖÆ×
         midiOutShortMsg(handle, voice);
         voice = (choVolume << 16) + ((wind[note][5]) << 8) + voiceType+5;
         midiOutShortMsg(handle, voice);
-        // ¹Ä
+        // ï¿½ï¿½
         //voice = (drumVolume << 16) + ((wind[note][6]) << 8) + 0x99;
         //midiOutShortMsg(handle, voice);
         Sleep(sleep);
@@ -728,17 +726,17 @@ void Score()        //ÀÖÆ×
         if (wind[note][5] != _)
             printf("%d ", wind[note][5]);
         else printf("   ");
-        /*switch (wind[note][6])//¹ÄÊä³ö
+        /*switch (wind[note][6])//ï¿½ï¿½ï¿½ï¿½ï¿½
         {
-        case D2: printf("¡ð  "); break;
-        case C2: printf("   ¡ñ"); break;
+        case D2: printf("ï¿½ï¿½  "); break;
+        case C2: printf("   ï¿½ï¿½"); break;
         case B3: printf("      o  "); break;
         case C3s:
         case A3: printf("         X"); break;
         case F2s: printf("        x"); break;
-        case A2: printf("¢Ù"); break;
-        case G2: printf("   ¢Ú"); break;
-        case F2: printf("      ¢Û"); break;
+        case A2: printf("ï¿½ï¿½"); break;
+        case G2: printf("   ï¿½ï¿½"); break;
+        case F2: printf("      ï¿½ï¿½"); break;
         default: printf(" "); break;
         }*/
         printf("\n");
