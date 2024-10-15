@@ -4,7 +4,7 @@
 
 enum Scale
 {
-    Rest = 0, C8 = 108, B7 = 107, A7s = 106, A7 = 105, G7s = 104, G7 = 103, F7s = 102, F7 = 101, E7 = 100,
+    C8 = 108, B7 = 107, A7s = 106, A7 = 105, G7s = 104, G7 = 103, F7s = 102, F7 = 101, E7 = 100,
     D7s = 99, D7 = 98, C7s = 97, C7 = 96, B6 = 95, A6s = 94, A6 = 93, G6s = 92, G6 = 91, F6s = 90, F6 = 89,
     E6 = 88, D6s = 87, D6 = 86, C6s = 85, C6 = 84, B5 = 83, A5s = 82, A5 = 81, G5s = 80, G5 = 79, F5s = 78,
     F5 = 77, E5 = 76, D5s = 75, D5 = 74, C5s = 73, C5 = 72, B4 = 71, A4s = 70, A4 = 69, G4s = 68, G4 = 67,
@@ -12,29 +12,17 @@ enum Scale
     G3 = 55, F3s = 54, F3 = 53, E3 = 52, D3s = 51, D3 = 50, C3s = 49, C3 = 48, B2 = 47, A2s = 46, A2 = 45,
     G2s = 44, G2 = 43, F2s = 42, F2 = 41, E2 = 40, D2s = 39, D2 = 38, C2s = 37, C2 = 36, B1 = 35, A1s = 34,
     A1 = 33, G1s = 32, G1 = 31, F1s = 30, F1 = 29, E1 = 28, D1s = 27, D1 = 26, C1s = 25, C1 = 24, B0 = 23,
-    A0s = 22, A0 = 21
+    A0s = 22, A0 = 21, _ = 0XFF
 };
-enum Voice
-{   
-    _ = 0XFF
-};
-void Score();
-int main()
-{
-    Score();
-    return 0;
-}
-
 
 void Score()        //乐谱
 {
-    HMIDIOUT handle;
-    midiOutOpen(&handle, 0, 0, 0, CALLBACK_NULL);
+    HMIDIOUT myMidi;
+    midiOutOpen(&myMidi, 0, 0, 0, 0);
     int voice = 0x0;            // 声音参数
     int voiceType = 0x90;       // 音色，范围为0x90~0x9f,其中0x99为鼓，其余为钢琴
     int sleep = 148;            // 一个十六分音符的长度
-    int wind[2256][8] =         // 歌曲编排，前六位为琴，其中前三位为主旋律，中间三位为和弦，后两位为鼓
-    {
+    int flame[2256][8] = {      // 火花乐谱，前六位为琴，其中前三位为主旋律，中间三位为和弦，后两位为鼓
         // 这样的一行 为两拍
         /*1*/   { B4,_,D3s,_,_,_,_,_ }, { C5s,_,_,_,_,_,_,_ }, { F5s,_,_,_,_,_,_,_ }, { B4,_,_,_,_,_,_,_ }, { C5s,_,_,_,_,_,_,_ }, { F5s,_,_,_,_,_,_,_ },
                 { B4,_,D4s,_,_,_,_,_ }, { C5s,_,_,_,_,_,_,_ }, { F5s,_,_,_,_,_,_,_ }, { B4,_,_,_,_,_,_,_ }, { C5s,_,_,_,_,_,_,_ }, { F5s,_,_,_,_,_,_,_ },
@@ -647,6 +635,7 @@ void Score()        //乐谱
         /*188*/ { B4,_,_,_,_,_,_,_ }, { C5s,_,_,_,_,_,_,_ }, { F5s,_,_,_,_,_,_,_ }, { B4,_,_,_,_,_,_,_ }, { C5s,_,_,_,_,_,_,_ }, { F5s,_,_,_,_,_,_,_ },
                 { B4,_,_,_,_,_,_,_ }, { C5s,_,_,_,_,_,_,_ }, { F5s,_,_,_,_,_,_,_ }, { B4,_,_,_,_,_,_,_ }, { C5s,_,_,_,_,_,_,_ }, { F5s,_,_,_,_,_,_,_ },
         };
+    
     /*
         鼓：C2强壮的底鼓  D2 稍长的军鼓 E2 短暂的军鼓 D2s好狠的军鼓   A2 一通  G2 二通 F2 三通
             B1正常底鼓    F3 牛铃       C3s Clash2    A3 Clash1       B3和D3s 丁丁镲 G1s敲鼓棒
@@ -671,7 +660,7 @@ void Score()        //乐谱
             printf("Section %d\t", currentSection);
         }
         else
-            printf("\t");
+            printf("\t\t");
         //音量控制
         switch (currentSection)      //在特定的小节处控制音量
         {
@@ -691,42 +680,42 @@ void Score()        //乐谱
             break;
         }
         // 旋律
-        voice = (rhyVolume << 16) + ((wind[note][0]) << 8) + voiceType;
-        midiOutShortMsg(handle, voice);
-        voice = (rhyVolume << 16) + ((wind[note][1]) << 8) + voiceType+1;
-        midiOutShortMsg(handle, voice);
+        voice = (rhyVolume << 16) + ((flame[note][0]) << 8) + voiceType;
+        midiOutShortMsg(myMidi, voice);
+        voice = (rhyVolume << 16) + ((flame[note][1]) << 8) + voiceType+1;
+        midiOutShortMsg(myMidi, voice);
         // 和弦
-        voice = (choVolume << 16) + ((wind[note][2]) << 8) + voiceType+2;
-        midiOutShortMsg(handle, voice);
-        voice = (choVolume << 16) + ((wind[note][3]) << 8) + voiceType+3;
-        midiOutShortMsg(handle, voice);
-        voice = (choVolume << 16) + ((wind[note][4]) << 8) + voiceType+4;
-        midiOutShortMsg(handle, voice);
-        voice = (choVolume << 16) + ((wind[note][5]) << 8) + voiceType+5;
-        midiOutShortMsg(handle, voice);
+        voice = (choVolume << 16) + ((flame[note][2]) << 8) + voiceType+2;
+        midiOutShortMsg(myMidi, voice);
+        voice = (choVolume << 16) + ((flame[note][3]) << 8) + voiceType+3;
+        midiOutShortMsg(myMidi, voice);
+        voice = (choVolume << 16) + ((flame[note][4]) << 8) + voiceType+4;
+        midiOutShortMsg(myMidi, voice);
+        voice = (choVolume << 16) + ((flame[note][5]) << 8) + voiceType+5;
+        midiOutShortMsg(myMidi, voice);
         // 鼓
-        //voice = (drumVolume << 16) + ((wind[note][6]) << 8) + 0x99;
-        //midiOutShortMsg(handle, voice);
+        //voice = (drumVolume << 16) + ((flame[note][6]) << 8) + 0x99;
+        //midiOutShortMsg(myMidi, voice);
         Sleep(sleep);
-        if (wind[note][0] != _)
-            printf("%d ", wind[note][0]);
+        if (flame[note][0] != _)
+            printf("%d ", flame[note][0]);
         else printf("   ");
-        if (wind[note][1] != _)
-            printf("%d ", wind[note][1]);
+        if (flame[note][1] != _)
+            printf("%d ", flame[note][1]);
         else printf("   ");
-        if (wind[note][2] != _)
-            printf("%d ", wind[note][2]);
+        if (flame[note][2] != _)
+            printf("%d ", flame[note][2]);
         else printf("   ");
-        if (wind[note][3] != _)
-            printf("%d ", wind[note][3]);
+        if (flame[note][3] != _)
+            printf("%d ", flame[note][3]);
         else printf("   ");
-        if (wind[note][4] != _)
-            printf("%d ", wind[note][4]);
+        if (flame[note][4] != _)
+            printf("%d ", flame[note][4]);
         else printf("   ");
-        if (wind[note][5] != _)
-            printf("%d ", wind[note][5]);
+        if (flame[note][5] != _)
+            printf("%d ", flame[note][5]);
         else printf("   ");
-        /*switch (wind[note][6])//鼓输出
+        /*switch (flame[note][6])//鼓输出
         {
         case D2: printf("○  "); break;
         case C2: printf("   ●"); break;
@@ -741,5 +730,11 @@ void Score()        //乐谱
         }*/
         printf("\n");
     }
-    midiOutClose(handle);
+    midiOutClose(myMidi);
+}
+
+int main()
+{
+    Score();
+    return 0;
 }
