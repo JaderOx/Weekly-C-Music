@@ -648,16 +648,16 @@ void Score()        //乐谱
     int endSection = 188;   // 结束小节位置
     int beatPerSection = 4; // 拍数
     int notePerBeat = 3;    // 每拍音符数
-    int currentSection = 0; // 当前小节
-    for (int note = notePerBeat*beatPerSection*startSection; note < notePerBeat*beatPerSection*endSection; note++)
+    int note = notePerBeat*beatPerSection*startSection; // 起始音符的位置
+    int currentSection = note / (notePerBeat*beatPerSection); // 当前小节
+    for (; note < notePerBeat*beatPerSection*endSection; note++)
     {
-        static int currentSection = note / (notePerBeat*beatPerSection);
-        // 小节数
+        // 小节数计算部分
         if (note % 12 == 0)
         {
-            printf("\n");
-            currentSection++;
-            printf("Section %d\t", currentSection);
+                printf("\n");
+                currentSection++;
+                printf("Section %d\t", currentSection);
         }
         else
             printf("\t\t");
